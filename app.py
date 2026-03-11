@@ -40,11 +40,15 @@ def predict():
     
     features = np.array([[N,P,K,temperature,humidity,ph,rainfall,np_ratio,nk_ratio,pk_ratio,nutrient_sum,temp_humidity,temp_rainfall,humidity_rainfall]])
     
+    ss = joblib.load("src/standard_scaler.pkl")
+    features = ss.transform(features)
+    
     prediction = model.predict(features)
+    
     
     crop = label_encoder.inverse_transform(prediction)[0]
     
-    return flask.render_template("index.html",prediction=crop)
+    return flask.render_template("index.html",prediction=crop,N=N,P=P,K=K,temperature=temperature,humidity=humidity,ph=ph,rainfall=rainfall)
 
 if __name__ == "__main__":
     app.run(debug = True)

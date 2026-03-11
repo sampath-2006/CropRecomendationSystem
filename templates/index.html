@@ -2,6 +2,7 @@
 <html>
 
 <head>
+
 <title>Crop Recommendation System</title>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -14,38 +15,76 @@
 
 <h1>Crop Recommendation System</h1>
 
-<form action="/predict" method="post">
+<form action="/predict" method="post" id="cropForm">
+
+<button type="button" onclick="getLocationWeather()" class="weather-btn">
+Auto Detect Weather
+</button>
 
 <label>Nitrogen (N)</label>
-<input type="number" name="N" required>
+<input type="number" name="N" value="{{ N if N else '' }}" required>
 
 <label>Phosphorus (P)</label>
-<input type="number" name="P" required>
+<input type="number" name="P" value="{{ P if P else '' }}" required>
 
 <label>Potassium (K)</label>
-<input type="number" name="K" required>
+<input type="number" name="K" value="{{ K if K else '' }}" required>
 
 <label>Temperature (°C)</label>
-<input type="number" step="any" name="temperature" required>
+<input type="number" step="any" name="temperature" value="{{ temperature if temperature else '' }}" required>
 
 <label>Humidity (%)</label>
-<input type="number" step="any" name="humidity" required>
+<input type="number" step="any" name="humidity" value="{{ humidity if humidity else '' }}" required>
 
 <label>Soil pH</label>
-<input type="number" step="any" name="ph" required>
+<input type="number" step="any" name="ph" value="{{ ph if ph else '' }}" required>
 
 <label>Rainfall (mm)</label>
-<input type="number" step="any" name="rainfall" required>
+<input type="number" step="any" name="rainfall" value="{{ rainfall if rainfall else '' }}" required>
 
-<button type="submit">Predict Crop</button>
+<button type="submit" class="predict-btn">Predict Crop</button>
+
+<button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
 
 </form>
+
+
+<div class="soil-health">
+
+<h3>Soil Health Indicators</h3>
+
+<div class="bar">
+<span>Nitrogen</span>
+<div class="progress">
+<div id="nBar"></div>
+</div>
+</div>
+
+<div class="bar">
+<span>Phosphorus</span>
+<div class="progress">
+<div id="pBar"></div>
+</div>
+</div>
+
+<div class="bar">
+<span>Potassium</span>
+<div class="progress">
+<div id="kBar"></div>
+</div>
+</div>
+
+</div>
+
 
 {% if prediction %}
 
 <div class="result">
 
-<h2>Recommended Crop:</h2>
+<h2>Recommended Crop</h2>
+
+<img src="{{ url_for('static', filename='images/' + prediction + '.png') }}" class="crop-img">
+
 <p>{{ prediction }}</p>
 
 </div>
@@ -54,5 +93,61 @@
 
 </div>
 
+
+<script>
+
+function clearForm(){
+
+document.getElementById("cropForm").reset()
+
+window.location.href="/"
+
+}
+
+
+document.querySelectorAll("input").forEach(input => {
+
+input.addEventListener("input", updateBars)
+
+})
+
+
+function updateBars(){
+
+let n = document.querySelector("input[name='N']").value
+let p = document.querySelector("input[name='P']").value
+let k = document.querySelector("input[name='K']").value
+
+document.getElementById("nBar").style.width = n + "%"
+document.getElementById("pBar").style.width = p + "%"
+document.getElementById("kBar").style.width = k + "%"
+
+}
+
+
+function getLocationWeather(){
+
+navigator.geolocation.getCurrentPosition(function(position){
+
+let lat = position.coords.latitude
+let lon = position.coords.longitude
+
+fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+
+.then(response => response.json())
+
+.then(data => {
+
+document.querySelector("input[name='temperature']").value = data.current_weather.temperature
+
+})
+
+})
+
+}
+
+</script>
+
 </body>
+
 </html>

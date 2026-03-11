@@ -1,64 +1,93 @@
 body{
-font-family: Arial;
-background:#f4f4f4;
+font-family:Arial, Helvetica, sans-serif;
+background:#f2f4f7;
 margin:0;
 padding:0;
 }
 
 .container{
-width:400px;
+width:420px;
 margin:50px auto;
 background:white;
 padding:30px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
+border-radius:12px;
+box-shadow:0px 4px 15px rgba(0,0,0,0.15);
 }
 
 h1{
 text-align:center;
 color:#2c3e50;
+margin-bottom:25px;
 }
 
 label{
-font-weight:bold;
 display:block;
-margin-top:10px;
+margin-top:12px;
+font-weight:bold;
+color:#34495e;
 }
 
 input{
 width:100%;
-padding:8px;
-margin-top:5px;
+padding:10px;
+margin-top:6px;
+border-radius:6px;
 border:1px solid #ccc;
-border-radius:5px;
+font-size:14px;
 }
 
-button{
+input:focus{
+outline:none;
+border-color:#27ae60;
+}
+
+.predict-btn{
 width:100%;
 margin-top:20px;
-padding:10px;
+padding:12px;
 background:#27ae60;
 color:white;
 border:none;
-border-radius:5px;
+border-radius:6px;
 font-size:16px;
 cursor:pointer;
 }
 
-button:hover{
+.predict-btn:hover{
 background:#219150;
 }
 
+.clear-btn{
+width:100%;
+margin-top:10px;
+padding:12px;
+background:#e74c3c;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+.clear-btn:hover{
+background:#c0392b;
+}
+
 .result{
-margin-top:20px;
-padding:15px;
-background:#ecf9f1;
-border-radius:5px;
+margin-top:25px;
+background:#eafaf1;
+padding:20px;
+border-radius:8px;
 text-align:center;
 }
 
+.result h2{
+margin-bottom:10px;
+color:#2c3e50;
+}
+
 .result p{
-font-size:20px;
+font-size:22px;
 font-weight:bold;
 color:#27ae60;
 }
