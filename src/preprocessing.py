@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib as plt
 from sklearn.preprocessing import LabelEncoder,StandardScaler
 from sklearn.model_selection import train_test_split
+import joblib
 
 
 crop = pd.read_csv(r"D:\CropRecomendationSystem\CropRecomendationSystem\data\Crop_recommendation.csv")
@@ -49,6 +50,7 @@ def preprocess_data(crop):
 
     le = LabelEncoder()
     y = le.fit_transform(y)
+    joblib.dump(le,'label_encodel.pkl')
 
     ss = StandardScaler()
     x = ss.fit_transform(x)
