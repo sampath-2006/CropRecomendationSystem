@@ -51,7 +51,7 @@ def predict():
     return flask.render_template("index.html",prediction=crop,N=N,P=P,K=K,temperature=temperature,humidity=humidity,ph=ph,rainfall=rainfall)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run()
     
     
     
