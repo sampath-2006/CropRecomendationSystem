@@ -1,4 +1,3 @@
-Below is a **clean, professional README.md** you can use for your GitHub repository. It is structured like a real ML project and will look good to recruiters.
 
 ---
 
